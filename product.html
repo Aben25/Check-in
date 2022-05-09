@@ -53,10 +53,10 @@
     let AttendeeUniqueID = params.get("AttendeeUniqueID");
     console.log(FullName);
     onload = function () {
+      sessionStorage.setItem("Name", FullName);
       document.getElementById("card-title").innerHTML += FullName;
       document.getElementById("Email").innerHTML += Email;
       document.getElementById("CompanyName").innerHTML += CompanyName;
-
 
     };
     const request = new XMLHttpRequest();
@@ -76,7 +76,7 @@
       request.send();
       request.onload = (e) => {
         alert("Check-in successful");
-        window.location.href = "./index.html";
+        window.location.href = "./confirmation.html";
       };
     }
   </script>
