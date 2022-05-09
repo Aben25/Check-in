@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <link rel="shortcut icon" href="./favicon.png" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+  <title>Attendee</title>
+
+</head>
+
+<body>
+  <div class="row">
+    <div class="col-4 text-center">
+    </div>
+
+
+    <div class="col-m-4 text-center p-5">
+      <div class="card">
+        <div class="card-body">
+          <h5 id="card-title" class="card-title"></h5>
+          <p id="Email" class="Email"><strong>Email:</strong> </p>
+          <p id="CompanyName" class="CompanyName"><strong>Company:</strong> </p>
+          <button type="button" class="btn btn-primary" onclick="send()">Check-in</button>
+          <p class="card-text">
+          </p>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="col-4 text-center">
+    </div>
+  </div>
+  <div>
+
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/algoliasearch@4.5.1/dist/algoliasearch-lite.umd.js"></script>
+  <script src="./src/product.js"></script>
+  </div>
+
+
+  <script>
+    var currentUrl = window.location.href;
+    let params = new URL(currentUrl).searchParams;
+    let FullName = params.get("FullName");
+    let Email = params.get("Email");
+    let CompanyName = params.get("CompanyName");
+    let AttendeeUniqueID = params.get("AttendeeUniqueID");
+    console.log(FullName);
+    onload = function () {
+      document.getElementById("card-title").innerHTML += FullName;
+      document.getElementById("Email").innerHTML += Email;
+      document.getElementById("CompanyName").innerHTML += CompanyName;
+
+
+    };
+    const request = new XMLHttpRequest();
+
+    function send() {
+      console.log("sending");
+      request.open(
+        "POST",
+        `https://connect.artba.org/api/attendees/${AttendeeUniqueID}/mark-attended`
+      );
+      request.setRequestHeader(
+        "Authorization",
+        "Basic d2SuLwamTRQfEWqAuwBQ4zSTiSlq34mrICTaMeAIPS4="
+      );
+      request.setRequestHeader("Content-Type", "application/json");
+
+      request.send();
+      request.onload = (e) => {
+        alert("Check-in successful");
+        window.location.href = "./index.html";
+      };
+    }
+  </script>
+</body>
+
+</html>
